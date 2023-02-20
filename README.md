@@ -9,6 +9,8 @@ This repo lays out a guide for the unoffcial implementation of the **Vision Tran
 
 ###### Let's get started...
 
+<p align="center"><img src="https://raw.githubusercontent.com/gauravreddy08/pytorch-vision-transformer/main/assets/architecture.png" alt="Architecture " width=70%></p>
+
 # Overview
 
 When replicating a paper, we need to take a note of these three things mainly, the **input**, **architecture** of the model, and finally the training and model **hyperparameters** used. Of course, all these details would be sprinkled throughout the entire paper, but in our case, "most" of the details lie behind the **"[Equation 1-4](https://arxiv.org/pdf/2010.11929.pdf#page=4)"**, the **"[Figure 1: Model overview](https://arxiv.org/pdf/2010.11929.pdf#page=3)"** and the **"[Table 1: Details of Vision Transformer model variants](https://arxiv.org/pdf/2010.11929.pdf#page=5)"**
@@ -21,14 +23,11 @@ When replicating a paper, we need to take a note of these three things mainly, t
 
 # 1. Input to the model 
 
-<img src="https://raw.githubusercontent.com/gauravreddy08/pytorch-vision-transformer/main/assets/architecture.png" alt="Architecture ">
-
----
+![Input Architecture](assets/input.png)
 
 The **ViT architecture** is heavily inspired by the Transformer architecture (hence the name **"Vision Transformer"**). Instead of looking at the data as a whole, these networks focus and give "*attention*" to specific parts of data or an image, in our case. In a **Vision Transformer (ViT)**, the input image is first divided into smaller patches, and each patch is treated like a word in a sentence. The patches are then processed by a *transformer encoder* that's been adapted for image analysis.
 
---- 
----
+![Images to Patches](assets/imagestopatches.png)
 
 So as an initial input through our network, images are resized and cropped into several different **patches**. These patches are then passed through the *transformer encoder* as **1D Tensors**. Also, each patch (image) is coupled with its respective **"positional embedding"**. And there's an extra learnable **"classification token [CLS]"** prepended to the sequence of embeddings.
 
@@ -136,6 +135,8 @@ $$ P E_{(p o s, 2 i+1)}=\cos \left(p o s / 10000^{2 i / d_{\text {model}}}\right
 ``` -->
 
 # **2. The Architecture**
+
+![Encoder Architecture](assets/encoder.png)
 
 > Remember, every model is made of layers.
 
@@ -323,16 +324,16 @@ optimizer = torch.optim.Adam(params=vit.parameters(), lr=1e-3,
 
 # 4. Results 
 ### "Our" ViT model results 
----
----
+![Custom Results](assets/customresults.png)
 
 The model works! But why isn't performing well? 
 
 ViT is meant to be competing with *state-of-the-art* models right? Well, let's test with a pretrain ViT model...
 
+---
+
 ### "Pretrained" ViT model results 
----
----
+![Pretrained Results](assets/pretrainedresults.png)
 
 > Well, this model seems to work well. Where did we go wrong?
 
