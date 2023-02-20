@@ -3,15 +3,15 @@
 <a href="https://colab.research.google.com/github/gauravreddy08/pytorch-vision-transformer/blob/main/vit-replication.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a><b>&nbsp&nbsp&nbsp</b>
 <a href="https://deepnote.com/viewer/github/gauravreddy08/pytorch-vision-transformer/blob/main/vit-replication.ipynb" target="_parent"><img src="https://deepnote.com/static/buttons/view-in-deepnote-white-small.svg" alt="Open In Colab"/> </a> </p>
 
-This repo lays out a guide for the unoffcial implementation of the Vision Transformer (ViT), inspired from the paper "*[An Image Is Worth 16X16 Words: Transformers For Image Recognition At Scale](https://arxiv.org/abs/2010.11929)*", in **PyTorch**. Being a considerable *novice* myself, I tried to explain all the math, literature and code in a quite simpler manner. 
+This repo lays out a guide for the unoffcial implementation of the **Vision Transformer (ViT)**, inspired from the paper "*[An Image Is Worth 16X16 Words: Transformers For Image Recognition At Scale](https://arxiv.org/abs/2010.11929)*", in **PyTorch**. Being a considerable *novice* myself, I tried to explain all the math, literature and code in a quite simpler manner. 
 
-> For some reason, GitHub is failing to render the `vit-replication.ipynb` notebook, however, you can directly access it on [**Colab**](https://colab.research.google.com/github/gauravreddy08/pytorch-vision-transformer/blob/main/vit-replication.ipynb) or view it using [**DeepNote**](https://deepnote.com/viewer/github/gauravreddy08/pytorch-vision-transformer/blob/main/vit-replication.ipynb). 
+> For some reason, GitHub is unable to render the `vit-replication.ipynb` notebook, however, you can directly access it on [**Colab**](https://colab.research.google.com/github/gauravreddy08/pytorch-vision-transformer/blob/main/vit-replication.ipynb) or view it using [**DeepNote**](https://deepnote.com/viewer/github/gauravreddy08/pytorch-vision-transformer/blob/main/vit-replication.ipynb). 
 
 ###### Let's get started...
 
 # Overview
 
-When replicating a paper, we need to take note of these three things mainly, the **input**, **architecture** of the model, and finally the training and model **hyperparameters** used. Of course, all these details would be sprinkled throughout the entire paper, but in our case, "most" of the details lie behind the **"[Equation 1-4](https://arxiv.org/pdf/2010.11929.pdf#page=4)"**, the **"[Figure 1: Model overview](https://arxiv.org/pdf/2010.11929.pdf#page=3)"** and the **"[Table 1: Details of Vision Transformer model variants](https://arxiv.org/pdf/2010.11929.pdf#page=5)"**
+When replicating a paper, we need to take a note of these three things mainly, the **input**, **architecture** of the model, and finally the training and model **hyperparameters** used. Of course, all these details would be sprinkled throughout the entire paper, but in our case, "most" of the details lie behind the **"[Equation 1-4](https://arxiv.org/pdf/2010.11929.pdf#page=4)"**, the **"[Figure 1: Model overview](https://arxiv.org/pdf/2010.11929.pdf#page=3)"** and the **"[Table 1: Details of Vision Transformer model variants](https://arxiv.org/pdf/2010.11929.pdf#page=5)"**
 
 > **Vision Transformer (ViT) paper: [**`An Image Is Worth 16X16 Words`**](https://arxiv.org/abs/2010.11929)**
 
@@ -75,7 +75,7 @@ So as an initial input through our network, images are resized and cropped into 
 
 $$\mathbf{z}_0=\left[\mathbf{x}_{\text {class }} ; \mathbf{x}_p^1 \mathbf{E} ; \mathbf{x}_p^2 \mathbf{E} ; \cdots ; \mathbf{x}_p^N \mathbf{E}\right]+\mathbf{E}_{p o s}, \quad \mathbf{E} \in \mathbb{R}^{\left(P^2 \cdot C\right) \times D}, \mathbf{E}_{p o s} \in \mathbb{R}^{(N+1) \times D}$$
 
-Equation 1 pretty much sums up the whole above content into a mathematical form. 
+Equation 1 pretty much sums up the whole content above, into a mathematical form. 
 
 But, how about a psuedo code ? 
 
@@ -340,17 +340,15 @@ These results are likely because of the difference in data resources and trainin
 
 Our model fails to perform well cause of multiple reasons, few major ones are: 
 
-1. **`Insufficient Data` :** Our dataset contains only 100s of images, while the pretrained model is trained on ImageNet dataset, whoch containes over 14,197,122 images. 
+1. **`Insufficient Data` :** Our dataset contains only few hundreds of images, while the pretrained model is trained on ImageNet dataset, which containes over 14,197,122 images. 
 2. **`Computational Limitations` :** The pretrained model from the paper, is trained for 7 epochs with a batch size of 4096, while ours was for 5 epochs and only 32 batch size
 
-Apart from these, the research had plethora of resources, money and most importantly time. They worked on this model for days, weeks, months and even year presumably, trying and tweaking several hyper-parameters to achieve the best weights as possible. 
+Apart from these, the research team had plethora of resources, money and most importantly time. They worked on this model for days, weeks, months and even year presumably, trying and tweaking several hyper-parameters to achieve the best weights as possible. 
 
-As of February 2023, the price for renting a TPUv3 (Tensor Processing Unit version 3) with 8 cores on Google Cloud is **$12.88** per hour.
-
-To rent one for 30 straight days would cost **$5,924 USD per month**.
+As of February 2023, the price for renting a TPUv4 (Tensor Processing Unit version 4) with 8 cores on Google Cloud is **$12.88** per hour. To rent one for 30 straight days would cost **$5,924 USD per month**.
 
 This cost (monetary and time) may be viable for some *larger research teams* or enterprises but for many people it's not.
 
 So having a pretrained model available through resources like `torchvision.models`, the **timm (Torch Image Models)** library, the **HuggingFace Hub** or even from the authors of the papers themselves (there's a growing trend for machine learning researchers to release the code and pretrained models from their research papers, I'm a big fan of this trend, many of these resources can be found on [**Paperswithcode.com**](https://paperswithcode.com/)).
 
-If you're focused on leveraging the benefits of a specific model architecture rather than creating your custom architecture, I'd highly recommend using a pretrained model.
+> If you're focused on leveraging the benefits of a specific model architecture rather than creating your custom architecture, I'd highly recommend using a pretrained model.
